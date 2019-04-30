@@ -1,24 +1,22 @@
-import { Rate } from 'antd';
 import * as React from 'react';
-import './App.scss';
+import { BrowserRouter as Router, Route } from "react-router-dom";
+import Index from './components/Index/Index';
+import Login from './components/Login/Login';
+import SignUp from './components/SignUp/SignUp';
 
-import logo from './logo.svg';
 
 class App extends React.Component {
-  public render() {
+   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <Router>
+        <div>
+          <Route exact={true} path="/" component={Index} />
+          <Route path="/Login" component={Login} />
+          <Route path="/SignUP" component={SignUp}/>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <Rate character="6"/>
-      </div>
-    );
-  }
-}
-
-export default App;
+       </Router>
+        )
+      }
+    }
+  
+    export default App;
