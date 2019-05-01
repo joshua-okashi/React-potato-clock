@@ -19,16 +19,12 @@ export default class SignUp extends Component<any,ISignUpState> {
       passwordConformation: ''
     }
   }
+  onChange = (key: keyof ISignUpState,value:string) => {
+    const newState = {}
+    newState[key] = value
+    this.setState(newState)
+  }
 
-  onChangeAccount = (e:any) => {
-    this.setState( { account: e.target.value})
-  }
-  onChangePassword = (e:any) => {
-    this.setState( {password: e.target.value})
-  }
-  onChangePasswordConformation = (e:any) => {
-    this.setState( {passwordConformation: e.target.value})
-  }
   submit = async () =>{
     const { account,password,passwordConformation } = this.state
     try{
@@ -37,6 +33,7 @@ export default class SignUp extends Component<any,ISignUpState> {
         password,
         password_confirmation: passwordConformation
       })
+      this.props.history.push('/')
     }catch(e){
       throw new Error(e)
     }
@@ -51,13 +48,20 @@ export default class SignUp extends Component<any,ISignUpState> {
           placeholder="请输入用户名"
           prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
           value={ account }
-          onChange={this.onChangeAccount}
+          onChange={(e) =>{this.onChange('account',e.target.value)}}
         />
-        <Input.Password value={password} placeholder="请输入密码" 
-        onChange={this.onChangePassword} />
-        <Input.Password value={passwordConformation} placeholder="请确认密码" 
-        onChange={this.onChangePasswordConformation} />
-        <Button type="primary" className="loginButton" onClick={this.submit}>注册</Button>
+        <Input.Password 
+        value={password} placeholder="请输入密码" 
+        onChange={(e) =>{this.onChange('password',e.target.value)}} 
+        />
+        <Input.Password 
+        value={passwordConformation} placeholder="请确认密码" 
+        onChange={(e) =>{this.onChange('passwordConformation',e.target.value)}} 
+        />
+        <Button 
+        type="primary" className="SignUpButton" 
+        onClick={this.submit}>注册
+        </Button>
         <p>如果有账号，请<Link to='/Login'>登录</Link>></p>
       </div>
     )
