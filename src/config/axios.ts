@@ -1,4 +1,5 @@
 import axios from "axios";
+import history from './history';
 
 const appID = "tC7J5CxEUjZtjNKiRommKHbg"
 const appSecret ="7V1P6bQbWbDWrXTzJiAPTkm8"
@@ -30,9 +31,13 @@ axios.interceptors.response.use(function (response:any) {
   if(response.headers['x-token']){
     localStorage.setItem('x-token',response.headers['x-token'])
   }
+
   return response;
 }, function (error:any) {
   // 对响应错误做点什么
+  if(error.response.status === 401){
+    history.push('/login')
+  }
   return Promise.reject(error);
 });
 

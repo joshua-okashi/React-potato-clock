@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Input, Icon ,Button } from 'antd';
 import {Link} from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../config/axios';
 import './SignUp.scss'
 
 interface ISignUpState {
@@ -35,7 +35,7 @@ export default class SignUp extends Component<any,ISignUpState> {
       })
       this.props.history.push('/')
     }catch(e){
-      throw new Error(e)
+      console.log(e)
     }
   }
 
