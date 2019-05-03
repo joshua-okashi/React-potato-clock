@@ -3,10 +3,18 @@
   align-items: center;
   padding: 8px 0;
   border-bottom: 1px solid #ddd;
-  &:hover{background:#f9f9f9}
-  &.editing{background: #fff3d2}
+  &:hover{background:#f9f9f9;}
+  &.editing{background: #fff3d2;}
+  &:first-child{
+    border-top: 1px solid #ddd;
+  }
+  &.completed{
+    >.text{
+      text-decoration: line-through;
+      color: #a9a9a9;
+    }
+  }
   > .editing,>.text {
-
     flex: 1;
   }
   >.editing{
@@ -18,6 +26,12 @@
       border: 0;
       padding: 0;
       outline: none;
+      background: transparent;
+    }
+    >.iconWrapper>.antion{
+      margin-left: 4px;
+      color: #a9a9a9;
+      cursor: pointer;
     }
   }
 
