@@ -22,9 +22,9 @@ export default class Todos extends Component<any,ITodosState> {
     try{
       const response = await axios.post('todos',params)
       this.setState({todos: [response.data.resource,...todos]})
+      console.log(response.data)
     }catch(e){
-      // throw new Error(e)
-      console.log(e)
+      throw new Error(e)
     }
   }
 
@@ -35,10 +35,11 @@ export default class Todos extends Component<any,ITodosState> {
   getTodos = async() => {
     try{
       const response = await axios.get('todos')
-      this.setState({todos: response.data.resources})
+      const todos = response.data.resources.map((t:any) =>Object.assign({},t,{editing: false}))
+      console.log(response.data)
+      this.setState({todos})
     }catch(e){
-       // throw new Error(e)
-      console.log(e)
+       throw new Error(e)
     }
   }
 
@@ -55,8 +56,20 @@ export default class Todos extends Component<any,ITodosState> {
       })
       this.setState({todos: newTodo})
     }catch(e){
-      console.log(e)
+      throw new Error(e)
     }
+  }
+
+  toEditing = (id:number) => {
+    const {todos} = this.state
+    const newTodos = todos.map(t=>{
+      if(id === t.id){
+        return Object.assign({},t,{editing: true})
+      }else {
+        return Object.assign({},t,{editing:false})
+      }
+    })
+    this.setState({todos: newTodos})
   }
 
   render() {
@@ -66,9 +79,10 @@ export default class Todos extends Component<any,ITodosState> {
         <main>
           {
             this.state.todos.map( t =>{
-              <TodoItem key={t.id} {...t}
-                updata={this.updateTodo}
-              />
+              return (<TodoItem key={t.id} {...t}
+                update={this.updateTodo}
+                toEditing={this.toEditing}
+              />)
             })
           }
         </main>

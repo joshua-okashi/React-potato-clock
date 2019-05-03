@@ -1,32 +1,67 @@
 import React, { Component } from 'react'
-import { Checkbox } from 'antd';
-
+import { Checkbox,Icon } from 'antd';
+import './TodoItem.scss'
+// import classNames from 'classnames';
 
 interface ITodoItemProps {
   id: number;
   description: string;
   completed: boolean;
+  editing: boolean;
   update: (id:number,params: any) => void;
-
+  toEditing: (id:number) => void;
 }
 
-export default class TodoItem extends Component<any,ITodoItemProps> {
+interface ITodoItemState {
+  editText: string;
+}
+
+export default class TodoItem extends Component<ITodoItemProps,ITodoItemState> {
   constructor(props: any){
     super(props)
+    this.state = {
+      editText: this.props.description
+    }
 
   }
 
   update = (params:any) => {
-    this.props.update(this.componentDidCatch,params)
+    this.props.update(this.props.id,params)
+  }
+
+  toEditing = () => {
+    this.props.toEditing(this.props.id)
+  }
+
+  onKeyUp = (e:any) =>{
+    if(e.keyCode === 13 && this.state.editText !== '') {
+      this.update({description:this.state.editText})
+    }
   }
 
   render() {
+    const Editing =(
+      <div className="editing">
+        <input type="text" value={this.state.editText}
+               onChange={e=>this.setState({editText: e.target.value})}
+               onKeyUp={this.onKeyUp} 
+        />
+        <div className="iconWrapper">
+          <Icon type="enter" />
+          <Icon type="delete" theme="filled" 
+                onClick={e=> this.update({deleted: true})}/>
+        </div>
+      </div>
+    )
+    const Text = <span onDoubleClick={this.toEditing}>{this.props.description}</span>
     return (
       <div className="TodoItem" id="TodoItem">
         <Checkbox checked={this.props.completed} 
                   onChange={e=> this.update({completed: e.target.checked})}
         />
-        <span>{this.props.description}</span>
+        {
+          this.props.editing?Editing:Text
+        }
       </div>
     )
   }

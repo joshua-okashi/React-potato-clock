@@ -35,7 +35,7 @@ export default class TodoInput extends Component<ITodoInputProps,ITodoInputState
     const {description} = this.state
     const suffix = description ? <Icon type="enter" onClick={this.addTodo}/> : <span/>
     return (
-      <div>
+      <div className="TodoInput" id="TodoItem">
         <Input 
         placeholder="添加事项" 
         value={description}

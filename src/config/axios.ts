@@ -17,7 +17,7 @@ instance.interceptors.request.use(function (config:any) {
   // 在发送请求之前做些什么
   const xToken = localStorage.getItem('x-token')
   if(xToken){
-    config.headers['Authorization'] = `Bearer' ${xToken}`
+    config.headers['Authorization'] = `Bearer ${xToken}`
   }
   return config;
 }, function (error:any) {
@@ -26,7 +26,7 @@ instance.interceptors.request.use(function (config:any) {
 });
 
 // 添加响应拦截器
-axios.interceptors.response.use(function (response:any) {
+instance.interceptors.response.use(function (response:any) {
   // 对响应数据做点什么
   if(response.headers['x-token']){
     localStorage.setItem('x-token',response.headers['x-token'])
