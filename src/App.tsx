@@ -6,8 +6,6 @@ import Login from './components/Login/Login';
 import SignUp from './components/SignUp/SignUp';
 
 
-
-
 class App extends React.Component {
   constructor(props:any){
     super(props)
