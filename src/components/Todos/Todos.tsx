@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+const { connect } = require("react-redux");
+import {addTodo} from '../../redux/actions'
 import TodoInput from './TodoInput';
 import axios from "../../config/axios";
 import './Todos.scss';
@@ -9,7 +11,7 @@ interface ITodosState {
   todos: any[];
 }
 
-export default class Todos extends Component<any, ITodosState> {
+class Todos extends Component<any, ITodosState> {
   constructor(props: any) {
     super(props)
     this.state = {
@@ -87,7 +89,7 @@ export default class Todos extends Component<any, ITodosState> {
   render() {
     return (
       <div className="Todos" id="Todos">
-        <TodoInput addTodo={(params) => this.addTodo(params)} />
+        <TodoInput/>
         <div className="todoList">
           {
             this.unCompletedTodos.map(t => {
@@ -110,3 +112,14 @@ export default class Todos extends Component<any, ITodosState> {
     )
   }
 }
+ 
+const mapStateToProps = (state:any,ownProps:any) =>({
+  todos: state.todos,
+  ...ownProps
+})
+
+const mapDispatchToProps = {
+  addTodo
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Todos);

@@ -3,13 +3,13 @@ import { Menu, Dropdown, Icon } from 'antd'
 import Todos from "../Todos/Todos";
 import axios from '../../config/axios'
 import  history  from "../../config/history";
-import './Index.scss'
+import './Home.scss'
 
 interface IRouter {
   history: any;
 }
 
-interface IIndexState {
+interface IHomeState {
   user: any;
 }
 
@@ -25,7 +25,7 @@ const menu = (
   </Menu>
 );
 
-export default class Index extends Component<IRouter, IIndexState> {
+export default class Home extends Component<IRouter, IHomeState> {
   constructor(props: any) {
     super(props)
     this.state = {
@@ -44,7 +44,7 @@ export default class Index extends Component<IRouter, IIndexState> {
 
   render() {
     return (
-      <div className='Index' id='Index'>
+      <div className='Home' id='Home'>
         <header>
           <span className="logo">Logo</span>
           <Dropdown overlay={menu}>
