@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 const { connect } = require("react-redux");
-import {initTodos,updateTodo} from '../../redux/actions'
+import {initTodos,updateTodo} from '../../redux/actions/todos';
 import TodoInput from './TodoInput';
 import axios from "../../config/axios";
 import './Todos.scss';

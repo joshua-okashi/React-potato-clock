@@ -6,7 +6,7 @@ export default (state:any[] = [],action:any):any=> {
     case ADD_TODO :
       return [...state,...action.payload]
     case INIT_TODOS :
-      return [...action.payload]
+    return [...action.payload]
     case UPDATE_TODO :
       return state.map(t =>{
         if(t.id === action.payload.id){

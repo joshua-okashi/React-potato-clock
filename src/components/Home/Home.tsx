@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Menu, Dropdown, Icon } from 'antd'
 import Todos from "../Todos/Todos";
+import Tomatoes from "../Tomatoes/Tomatoes";
 import axios from '../../config/axios'
 import  history  from "../../config/history";
 import './Home.scss'
@@ -54,7 +55,8 @@ export default class Home extends Component<IRouter, IHomeState> {
           </Dropdown>
         </header>
         <main>
-          <Todos></Todos>
+          <Tomatoes/>
+          <Todos/>
         </main>
       </div>
     )

@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { Input,Icon } from 'antd';
 const { connect }= require('react-redux');
-import {addTodo} from '../../redux/actions'
+import {addTodo} from '../../redux/actions/todos'
 import axios from '../../config/axios'
 import './TodoInput.scss'
+
 
 
 interface ITodoInputState {
@@ -21,6 +22,8 @@ class TodoInput extends Component<ITodoInputProps,ITodoInputState> {
       description: ''
     }
   }
+
+ 
 
   onKeyUp = (e:any) => {
     if(e.keyCode === 13 && this.state.description !== '') {
