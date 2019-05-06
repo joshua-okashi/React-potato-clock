@@ -33,7 +33,7 @@ class Todos extends Component<any> {
     try {
       const response = await axios.get('todos')
       const todos = response.data.resources.map((t: any) => Object.assign({}, t, { editing: false }))
-      console.log(response.data)
+      console.log("getTodos:",response.data)
       this.props.initTodos(todos)
     } catch (e) {
       throw new Error(e)
