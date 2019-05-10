@@ -40,10 +40,9 @@ class Tomatoes extends Component<ITomatoesProps> {
 
   startTomato = async ()=>{
     try{
-      const response = await axios.post("tomatoes",{duration: 25*60*1000})
+      const response = await axios.post("tomatoes",{duration: 1500000})
       this.props.addTomato(response.data.resource)
-      console.log(response.data);
-      
+      console.log("startTomato",response.data)
     }catch(e){
       throw new Error(e)
     }
