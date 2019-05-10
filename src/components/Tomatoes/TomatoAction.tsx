@@ -1,20 +1,72 @@
 import React, { Component } from 'react'
-import { Button } from 'antd'
+import { Button,Icon, Input } from 'antd'
+import axios from '../../config/axios'
+import CountDown from './CountDown'
 
 interface ITomatoActionProps{
   startTomato: () => void;
+  updateTomato: (payload: any) => void;
   unfinishedTomato: any;
 }
 
-export default class TomatoAction extends Component<ITomatoActionProps> {
+interface ITomatoActionState{
+  description: string;
+}
+
+export default class TomatoAction extends Component<ITomatoActionProps,ITomatoActionState> {
   constructor(props:any){
     super(props)
+    this.state = {
+      description: ''
+    }
+  }
+
+  onKeyUp = (e:any) => {
+    if(e.keyCode === 13 && this.state.description !== '') {
+      this.addDescription()
+    }
+  }
+
+  addDescription = async()=> {
+    try {
+      const response = await axios.put(`tomatoes/${this.props.unfinishedTomato.id}`,
+      {description:this.state.description,
+      ended_at: new Date()})
+      console.log("addDescription",response)
+      this.props.updateTomato(response.data.resource)
+      this.setState({description:''})
+    }catch(e){
+      throw new Error(e)
+    }
   }
 
   render() {
+    let html = <div/>
+    if(this.props.unfinishedTomato === undefined){
+      html = <Button className="startTomatoButton" 
+                onClick={()=>{this.props.startTomato}}>开始番茄
+             </Button>
+    }else{
+      const startedAt = Date.parse(this.props.unfinishedTomato.started_at)
+      const duration = this.props.unfinishedTomato.duration
+      const timeNow  = new Date().getTime()
+      if(timeNow - startedAt > duration){
+        html = <div>
+                  <Input value={this.state.description} 
+                         onChange = {e =>this.setState({description: e.target.value})}
+                         onKeyUp={e => this.onKeyUp(e)}
+                  />
+                  <Icon type="close-circle" />
+              </div>
+      }else if(timeNow - startedAt < duration){
+        const timer = duration - timeNow - startedAt
+        html = <CountDown timer={timer} />
+      }
+    } 
+
     return (
       <div className="TomatoAction" id="TomatoAction">
-        <Button className="startTomatoButton" onClick={()=>{this.props.startTomato}}>开始番茄</Button>
+        {html}
       </div>
     )
   }
