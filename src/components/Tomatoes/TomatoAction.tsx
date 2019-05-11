@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import { Button,Icon, Input } from 'antd'
 import axios from '../../config/axios'
-import CountDown from './CountDown'
-// import CountDownHook from './CountDownHook'
+// import CountDown from './CountDown'
+import CountDownHook from './CountDownHook'
 
 interface ITomatoActionProps{
   startTomato: () => void;
@@ -66,7 +66,7 @@ export default class TomatoAction extends Component<ITomatoActionProps,ITomatoAc
               </div>
       }else if(timeNow - startedAt < duration){
         const timer = duration - timeNow + startedAt
-        html = <CountDown timer={timer} onFinish={this.onFinish}/>
+        html = <CountDownHook timer={timer} onFinish={this.onFinish}/>
       }
     }
 
