@@ -1,16 +1,19 @@
 import React, { Component } from 'react'
 import TomatoAction from './TomatoAction'
+import TomatoList from './TomatoList';
 const { connect } = require("react-redux");
 import {addTomato,updateTomato,initTomatoes} from '../../redux/actions/tomatos';
 import axios from '../../config/axios';
+const _ = require("lodash");
+import { format } from "date-fns";
 import './Tomatoes.scss'
+
 
 interface ITomatoesProps{
   addTomato: (payload: any) => any;
   updateTomato: (payload: any) => any;
   initTomatoes: (payload: any[]) => any;
   tomatoes: any[];
-
 }
 
 class Tomatoes extends Component<ITomatoesProps> {
@@ -25,8 +28,18 @@ class Tomatoes extends Component<ITomatoesProps> {
   }
 
   get unfinishedTomato(){
+    console.log(this.props.tomatoes)
     return this.props.tomatoes.filter(t => !t.description && !t.ended_at
     && !t.aborted)[0]
+  }
+
+  get finishedTomatoes(){
+    const finishedTomatoes = this.props.tomatoes.filter(t => !t.description && !t.ended_at
+      && !t.aborted)
+    const obj = _.groupBy(finishedTomatoes,(tomato:any)=>{
+      return format(tomato.started_at,"YYYY-MM-D")
+    })
+    return obj
   }
 
   getTomatoes = async ()=>{
@@ -56,6 +69,7 @@ class Tomatoes extends Component<ITomatoesProps> {
           unfinishedTomato={this.unfinishedTomato}
           updateTomato = {this.props.updateTomato}
         />
+        <TomatoList finishedTomatoes={this.finishedTomatoes}/>
       </div>
     )
   }

@@ -53,10 +53,9 @@ export default class TomatoAction extends Component<ITomatoActionProps,ITomatoAc
     });
   }
   
-
-  abortTomato = async ()=> {
+  abortTomato = ()=> {
     this.updateTomato({aborted: true})
-    document.title = `番茄时间`
+    document.title = '番茄时间'
   }
 
   updateTomato = async (params: any)=>{
@@ -92,10 +91,11 @@ export default class TomatoAction extends Component<ITomatoActionProps,ITomatoAc
       }else if(timeNow - startedAt < duration){
         const timer = duration - timeNow + startedAt
         html = (
-          <div className="countDownwrapper">
+          <div className="countDownWrapper">
             <CountDown timer={timer}
                        duration={duration}
-                       onFinish={this.onFinish} />
+                       onFinish={this.onFinish}
+            />
             <Icon type="close-circle" className="abort" onClick={this.showConfirm}/>
           </div>
           )
